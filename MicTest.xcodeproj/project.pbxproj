@@ -13,6 +13,8 @@
 		F6BC18C81E89CBC200EB123C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6BC18C61E89CBC200EB123C /* Main.storyboard */; };
 		F6BC18CA1E89CBC200EB123C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6BC18C91E89CBC200EB123C /* Assets.xcassets */; };
 		F6BC18CD1E89CBC200EB123C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6BC18CB1E89CBC200EB123C /* LaunchScreen.storyboard */; };
+		F6BC18DF1E89CC4200EB123C /* ARAudioRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = F6BC18DB1E89CC4200EB123C /* ARAudioRecognizer.m */; };
+		F6BC18E01E89CC4200EB123C /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = F6BC18DD1E89CC4200EB123C /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,10 @@
 		F6BC18C91E89CBC200EB123C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F6BC18CC1E89CBC200EB123C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F6BC18CE1E89CBC200EB123C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F6BC18DA1E89CC4200EB123C /* ARAudioRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAudioRecognizer.h; sourceTree = "<group>"; };
+		F6BC18DB1E89CC4200EB123C /* ARAudioRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAudioRecognizer.m; sourceTree = "<group>"; };
+		F6BC18DC1E89CC4200EB123C /* ARAudioRecognizerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAudioRecognizerDelegate.h; sourceTree = "<group>"; };
+		F6BC18DD1E89CC4200EB123C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +64,7 @@
 		F6BC18BC1E89CBC200EB123C /* MicTest */ = {
 			isa = PBXGroup;
 			children = (
+				F6BC18D81E89CC4200EB123C /* iOS-Audio-Recoginzer-master */,
 				F6BC18C01E89CBC200EB123C /* AppDelegate.h */,
 				F6BC18C11E89CBC200EB123C /* AppDelegate.m */,
 				F6BC18C31E89CBC200EB123C /* ViewController.h */,
@@ -77,6 +84,17 @@
 				F6BC18BE1E89CBC200EB123C /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F6BC18D81E89CC4200EB123C /* iOS-Audio-Recoginzer-master */ = {
+			isa = PBXGroup;
+			children = (
+				F6BC18DA1E89CC4200EB123C /* ARAudioRecognizer.h */,
+				F6BC18DB1E89CC4200EB123C /* ARAudioRecognizer.m */,
+				F6BC18DC1E89CC4200EB123C /* ARAudioRecognizerDelegate.h */,
+				F6BC18DD1E89CC4200EB123C /* README.md */,
+			);
+			path = "iOS-Audio-Recoginzer-master";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -110,6 +128,7 @@
 				TargetAttributes = {
 					F6BC18B91E89CBC200EB123C = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = TT8QKMGCPV;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -152,7 +171,9 @@
 			files = (
 				F6BC18C51E89CBC200EB123C /* ViewController.m in Sources */,
 				F6BC18C21E89CBC200EB123C /* AppDelegate.m in Sources */,
+				F6BC18E01E89CC4200EB123C /* README.md in Sources */,
 				F6BC18BF1E89CBC200EB123C /* main.m in Sources */,
+				F6BC18DF1E89CC4200EB123C /* ARAudioRecognizer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,6 +291,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = TT8QKMGCPV;
 				INFOPLIST_FILE = MicTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wanderingstan.mic-test.MicTest";
@@ -281,6 +303,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = TT8QKMGCPV;
 				INFOPLIST_FILE = MicTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wanderingstan.mic-test.MicTest";

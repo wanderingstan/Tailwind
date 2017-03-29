@@ -7,9 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "iOS-Audio-Recoginzer-master/ARAudioRecognizerDelegate.h"
+#import "iOS-Audio-Recoginzer-master/ARAudioRecognizer.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <ARAudioRecognizerDelegate>
 
+- (void)audioRecognized:(ARAudioRecognizer *)recognizer;
+- (void)audioLevelUpdated:(ARAudioRecognizer *)recognizer level:(float)lowPassResults;
+- (void)audioLevelUpdated:(ARAudioRecognizer *)recognizer averagePower:(float)averagePower peakPower:(float)peakPower;
 
 @end
 

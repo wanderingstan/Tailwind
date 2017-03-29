@@ -9,14 +9,19 @@
 #import "ViewController.h"
 
 @interface ViewController ()
-
 @end
 
-@implementation ViewController
+@implementation ViewController {
+    
+    ARAudioRecognizer *audioRecognizer;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    audioRecognizer = [[ARAudioRecognizer alloc] init];
+    audioRecognizer.delegate = self;
 }
 
 
@@ -25,5 +30,21 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)audioRecognized:(ARAudioRecognizer *)recognizer
+{
+    NSLog(@"audioRecognized");
+}
+
+- (void)audioLevelUpdated:(ARAudioRecognizer *)recognizer level:(float)lowPassResults
+{
+    NSLog(@"audioLevelUpdated level");
+    
+}
+
+- (void)audioLevelUpdated:(ARAudioRecognizer *)recognizer averagePower:(float)averagePower peakPower:(float)peakPower
+{
+    NSLog(@"audioLevelUpdated averagePower");
+    
+}
 
 @end

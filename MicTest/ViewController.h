@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "iOS-Audio-Recoginzer-master/ARAudioRecognizerDelegate.h"
 #import "iOS-Audio-Recoginzer-master/ARAudioRecognizer.h"
+#import <CoreLocation/CoreLocation.h>
 
-@interface ViewController : UIViewController <ARAudioRecognizerDelegate>
+@interface ViewController : UIViewController <ARAudioRecognizerDelegate, CLLocationManagerDelegate>
 
 - (void)audioRecognized:(ARAudioRecognizer *)recognizer;
 - (void)audioLevelUpdated:(ARAudioRecognizer *)recognizer level:(float)lowPassResults;

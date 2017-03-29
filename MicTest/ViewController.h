@@ -17,5 +17,9 @@
 - (void)audioLevelUpdated:(ARAudioRecognizer *)recognizer level:(float)lowPassResults;
 - (void)audioLevelUpdated:(ARAudioRecognizer *)recognizer averagePower:(float)averagePower peakPower:(float)peakPower;
 
+// UI
+@property (weak, nonatomic) IBOutlet UILabel *debugLabel;
+- (IBAction)startStopLoggingAction:(id)sender;
+
 @end
 

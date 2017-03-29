@@ -15,6 +15,7 @@
 		F6BC18CD1E89CBC200EB123C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6BC18CB1E89CBC200EB123C /* LaunchScreen.storyboard */; };
 		F6BC18DF1E89CC4200EB123C /* ARAudioRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = F6BC18DB1E89CC4200EB123C /* ARAudioRecognizer.m */; };
 		F6BC18E01E89CC4200EB123C /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = F6BC18DD1E89CC4200EB123C /* README.md */; };
+		F6BC18E61E8C418700EB123C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6BC18E51E8C418700EB123C /* AudioToolbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		F6BC18DB1E89CC4200EB123C /* ARAudioRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAudioRecognizer.m; sourceTree = "<group>"; };
 		F6BC18DC1E89CC4200EB123C /* ARAudioRecognizerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAudioRecognizerDelegate.h; sourceTree = "<group>"; };
 		F6BC18DD1E89CC4200EB123C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		F6BC18E51E8C418700EB123C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6BC18E61E8C418700EB123C /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -50,6 +53,7 @@
 			children = (
 				F6BC18BC1E89CBC200EB123C /* MicTest */,
 				F6BC18BB1E89CBC200EB123C /* Products */,
+				F6BC18E41E8C418700EB123C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -95,6 +99,14 @@
 				F6BC18DD1E89CC4200EB123C /* README.md */,
 			);
 			path = "iOS-Audio-Recoginzer-master";
+			sourceTree = "<group>";
+		};
+		F6BC18E41E8C418700EB123C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F6BC18E51E8C418700EB123C /* AudioToolbox.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

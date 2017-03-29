@@ -9,6 +9,7 @@
 // http://gis.stackexchange.com/questions/202455/how-to-extract-the-speed-from-a-gpx-file
 
 #import "ViewController.h"
+#include <AudioToolbox/AudioToolbox.h>
 
 @interface ViewController ()
 @end
@@ -19,6 +20,7 @@
     
     CLLocationManager *_locationManager;
     
+    BOOL isRecording;
     NSString *_logFilePathName;
     int _sampleIndex;
     int _audioSampleCountSinceLastLocation;
@@ -29,44 +31,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    // Setup mic
-    {
-        _audioRecognizer = [[ARAudioRecognizer alloc] init];
-        _audioRecognizer.delegate = self;
-    }
-    
-    // Setup location
-    {
-        _locationManager = [[CLLocationManager alloc] init];
-        _locationManager.delegate = self;
-        _locationManager.distanceFilter = kCLDistanceFilterNone;
-        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-        
-        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
-            [_locationManager requestWhenInUseAuthorization];
-        }
-        
-        [_locationManager startUpdatingLocation];
-    }
-
-    // Setup logging
-    {
-        int timestamp = [[NSDate date] timeIntervalSince1970];
-        NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        _logFilePathName = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"log_%@_%d.csv", @"test.csv", timestamp]];
-        
-        _sampleIndex = 0;
-        [self writeToLogFile:
-         @[@"No",
-           @"Latitude",
-           @"Longitude",
-           @"Altitude",
-           @"Speed",
-           @"Date",
-           @"Time",
-           @"_averageAudioPowerSinceLastLocation"]
-         ];
-    }
 }
 
 
@@ -121,6 +85,10 @@
     
     NSLog(@"Logged: %@", dataToLog);
     
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.debugLabel.text = [dataToLog componentsJoinedByString:@"\n"];
+    });
+    
     // Reset audio info
     _averageAudioPowerSinceLastLocation = 0.0;
     _audioSampleCountSinceLastLocation = 0;
@@ -142,6 +110,73 @@
     NSString *dataString = [logDataArray componentsJoinedByString:@","];
     [myHandle writeData:[dataString dataUsingEncoding:NSUTF8StringEncoding]];
     [myHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
+}
+
+- (IBAction)startStopLoggingAction:(id)sender
+{
+    UIButton *button = (UIButton*)sender;
+    if (isRecording) {
+        isRecording = NO;
+        [self stopLogging];
+        [button setTitle:@"Start" forState:UIControlStateNormal];
+        AudioServicesPlaySystemSound (1114); // end_record.caf
+    }
+    else {
+        isRecording = YES;
+        [self startLogging];
+        [button setTitle:@"Stop" forState:UIControlStateNormal];
+        AudioServicesPlaySystemSound (1113); // begin_record.caf
+    }
+}
+
+
+- (void)startLogging
+{
+    // Setup mic
+    {
+        _audioRecognizer = [[ARAudioRecognizer alloc] init];
+        _audioRecognizer.delegate = self;
+    }
+    
+    // Setup location
+    {
+        _locationManager = [[CLLocationManager alloc] init];
+        _locationManager.delegate = self;
+        _locationManager.distanceFilter = kCLDistanceFilterNone;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+            [_locationManager requestWhenInUseAuthorization];
+        }
+        
+        [_locationManager startUpdatingLocation];
+    }
+    
+    // Setup logging
+    {
+        int timestamp = [[NSDate date] timeIntervalSince1970];
+        NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        _logFilePathName = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"log_%@_%d.csv", @"test.csv", timestamp]];
+        
+        _sampleIndex = 0;
+        [self writeToLogFile:
+         @[@"No",
+           @"Latitude",
+           @"Longitude",
+           @"Altitude",
+           @"Speed",
+           @"Date",
+           @"Time",
+           @"_averageAudioPowerSinceLastLocation"]
+         ];
+    }
+
+}
+
+- (void)stopLogging
+{
+    _audioRecognizer = nil;  // Is this enough to kill it?
+    [_locationManager stopUpdatingLocation];
 }
 
 @end

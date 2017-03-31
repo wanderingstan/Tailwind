@@ -21,26 +21,57 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hS3-wC-lKL">
-                                <rect key="frame" x="61" y="28" width="265" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hS3-wC-lKL">
+                                <rect key="frame" x="110.5" y="28" width="154" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Begin Logging"/>
                                 <connections>
                                     <action selector="startStopLoggingAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hqU-yp-y9J"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Ready to Log" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="15" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7VU-4r-SIF">
-                                <rect key="frame" x="5" y="132" width="370" height="240"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log" lineBreakMode="tailTruncation" numberOfLines="15" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aZO-X7-niu">
+                                <rect key="frame" x="0.0" y="77" width="375" height="240"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="240" id="r7e-j4-wGZ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" red="0.38301282051282048" green="0.38301282051282048" blue="0.38301282051282048" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Ready to Log" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="15" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7VU-4r-SIF">
+                                <rect key="frame" x="5" y="77" width="370" height="240"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="240" id="b88-3h-2TH"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EwB-28-EN0">
+                                <rect key="frame" x="140.5" y="361" width="94" height="30"/>
+                                <state key="normal" title="Email Log File"/>
+                                <connections>
+                                    <action selector="emailLogFileAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wtX-Sv-TXz"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="aZO-X7-niu" firstAttribute="top" secondItem="7VU-4r-SIF" secondAttribute="top" id="7aF-uc-hht"/>
+                            <constraint firstItem="EwB-28-EN0" firstAttribute="top" secondItem="7VU-4r-SIF" secondAttribute="bottom" constant="44" id="94f-MV-X8C"/>
+                            <constraint firstItem="aZO-X7-niu" firstAttribute="width" secondItem="7VU-4r-SIF" secondAttribute="width" id="A3V-Ys-LCv"/>
+                            <constraint firstItem="EwB-28-EN0" firstAttribute="centerX" secondItem="7VU-4r-SIF" secondAttribute="centerX" id="CEa-ni-7wO"/>
+                            <constraint firstItem="hS3-wC-lKL" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="I75-wp-Ssy"/>
+                            <constraint firstItem="7VU-4r-SIF" firstAttribute="top" secondItem="hS3-wC-lKL" secondAttribute="bottom" constant="8" id="Lpn-M4-IiN"/>
+                            <constraint firstItem="7VU-4r-SIF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ppj-Sj-F18"/>
+                            <constraint firstItem="aZO-X7-niu" firstAttribute="height" secondItem="7VU-4r-SIF" secondAttribute="height" id="bYY-Rv-0wY"/>
+                            <constraint firstItem="7VU-4r-SIF" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="j0k-gm-7A5"/>
+                            <constraint firstItem="hS3-wC-lKL" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="ylx-52-GAw"/>
+                            <constraint firstItem="aZO-X7-niu" firstAttribute="centerX" secondItem="7VU-4r-SIF" secondAttribute="centerX" id="zRu-Ej-7Ae"/>
+                        </constraints>
                     </view>
                     <connections>
+                        <outlet property="debugKeyLabel" destination="aZO-X7-niu" id="jpJ-Jw-6a1"/>
                         <outlet property="debugLabel" destination="7VU-4r-SIF" id="RIK-fg-zyx"/>
                     </connections>
                 </viewController>

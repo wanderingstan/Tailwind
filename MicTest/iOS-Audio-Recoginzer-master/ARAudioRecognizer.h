@@ -27,5 +27,6 @@
 @property (nonatomic, readonly) float lowPassResults;
 
 - (id)initWithSensitivity:(float)sensitivity frequency:(float)frequency;
+- (void)stop;
 
 @end

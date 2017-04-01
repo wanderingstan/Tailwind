@@ -10,6 +10,7 @@
 
 #import "ViewController.h"
 #include <AudioToolbox/AudioToolbox.h>
+#import <sys/utsname.h> // For device name
 
 @interface ViewController ()
 @end
@@ -21,11 +22,15 @@
     CLLocationManager *_locationManager;
     
     BOOL isRecording;
-    NSString *_logFilePathName;
+    NSString *_sessionFileName; // Filename for this session--no extension
+    //NSString *_logFilePathName;
+    
     int _sampleIndex;
     int _audioSampleCountSinceLastLocation;
     
     float _averageAudioPowerSinceLastLocation;
+    
+    double _latestLat, _latestLon;
 }
 
 - (void)viewDidLoad {
@@ -104,6 +109,10 @@
         self.debugLabel.text = [dataToLog componentsJoinedByString:@"\n"];
     });
     
+    // Remember latest
+    _latestLat = newLocation.coordinate.latitude;
+    _latestLon = newLocation.coordinate.longitude;
+    
     // Reset audio info
     _averageAudioPowerSinceLastLocation = 0.0;
     _audioSampleCountSinceLastLocation = 0;
@@ -161,8 +170,7 @@
     {
         int timestamp = [[NSDate date] timeIntervalSince1970];
         NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        _logFilePathName = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"log_%@_%d.csv", @"test.csv", timestamp]];
-        
+        _sessionFileName = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"log_%@_%d", @"test", timestamp]];
         _sampleIndex = 0;
         
         NSArray* dataToLog = @[@"No",
@@ -186,6 +194,8 @@
 
 - (void)stopLogging
 {
+    [self downloadWeatherForLat:_latestLat andLon:_latestLon];
+    
     [_audioRecognizer stop];
     [_locationManager stopUpdatingLocation];
 }
@@ -196,11 +206,16 @@
 - (IBAction)emailLogFileAction:(id)sender
 {
     MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+    
+    if (picker == nil) {
+        NSLog(@"Cannot send mail");
+    }
+    
     picker.mailComposeDelegate = self;
     [picker setSubject:@"My speed and volume file"];
     
     // Set up recipients
-     NSArray *toRecipients = [NSArray arrayWithObject:@"stan@wanderingstan.com"];
+     NSArray *toRecipients = [NSArray arrayWithObject:@"wanderingstan+tailwind_data@gmail.com"];
     // NSArray *ccRecipients = [NSArray arrayWithObjects:@"second@example.com", @"third@example.com", nil];
     // NSArray *bccRecipients = [NSArray arrayWithObject:@"fourth@example.com"];
     
@@ -209,9 +224,17 @@
     // [picker setBccRecipients:bccRecipients];
     
     // Attach an image to the email
-    NSData *data = [[NSFileManager defaultManager] contentsAtPath:_logFilePathName];
-    [picker addAttachmentData:data mimeType:@"text/csv" fileName:@"speed-volume-file.csv"];
-    
+    {
+        NSString* logFilePathName = [NSString stringWithFormat:@"%@.csv",_sessionFileName];
+        NSData *data = [[NSFileManager defaultManager] contentsAtPath:logFilePathName];
+        [picker addAttachmentData:data mimeType:@"text/csv" fileName:@"speed-volume-file.csv"];
+    }
+    {
+        NSString* logFilePathName = [NSString stringWithFormat:@"%@_weather.xml", _sessionFileName];
+        NSData *data = [[NSFileManager defaultManager] contentsAtPath:logFilePathName];
+        [picker addAttachmentData:data mimeType:@"text/xml" fileName:@"weather.xml"];
+    }
+
     // Fill out the email body text
     NSString *emailBody = @"My csv with gps, speed, and volume is attached";
     [picker setMessageBody:emailBody isHTML:NO];
@@ -254,12 +277,14 @@
  */
 - (void)writeToLogFile:(NSArray*)logDataArray
 {
-    NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:_logFilePathName];
+    NSString* logFilePathName = [NSString stringWithFormat:@"%@.csv",_sessionFileName];
+    
+    NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:logFilePathName];
     if (myHandle == nil) {
         // Doesn't exist. Create it
-        NSLog(@"Created log file: %@", _logFilePathName);
-        [[NSFileManager defaultManager] createFileAtPath:_logFilePathName contents:nil attributes:nil];
-        myHandle = [NSFileHandle fileHandleForWritingAtPath:_logFilePathName];
+        NSLog(@"Created log file: %@", logFilePathName);
+        [[NSFileManager defaultManager] createFileAtPath:logFilePathName contents:nil attributes:nil];
+        myHandle = [NSFileHandle fileHandleForWritingAtPath:logFilePathName];
     }
     [myHandle seekToEndOfFile];
     NSString *dataString = [logDataArray componentsJoinedByString:@","];
@@ -267,5 +292,116 @@
     [myHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
 }
 
+#pragma mark - 
+#pragma mark Download weather conditions
+
+/**
+ * Weather: http://stackoverflow.com/questions/951839/api-to-get-weather-based-on-longitude-and-latitude-coordinates
+ * Download: http://stackoverflow.com/questions/16392420/how-to-download-files-from-url-and-store-in-document-folder
+ */
+-(void) downloadWeatherForLat:(double)lat andLon:(double)lon;{
+    // Download the file in a seperate thread.
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSLog(@"Downloading Started");
+        NSString *urlToDownload = [NSString stringWithFormat:@"http://forecast.weather.gov/MapClick.php?lat=%.5f&lon=%.5f&FcstType=dwml", lat, lon];
+        NSURL  *url = [NSURL URLWithString:urlToDownload];
+        NSData *urlData = [NSData dataWithContentsOfURL:url];
+        if (urlData) {
+            NSString* weatherFilePathName = [NSString stringWithFormat:@"%@_weather.xml",_sessionFileName];
+            
+            //saving is done on main thread
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [urlData writeToFile:weatherFilePathName atomically:YES];
+                NSLog(@"File Saved !");
+            });
+        }
+    });
+}
+
+#pragma mark -
+#pragma Get device name
+
+- (NSString*) deviceName
+{
+    // See http://stackoverflow.com/questions/11197509/ios-how-to-get-device-make-and-model
+    
+    struct utsname systemInfo;
+    
+    uname(&systemInfo);
+    
+    NSString* code = [NSString stringWithCString:systemInfo.machine
+                                        encoding:NSUTF8StringEncoding];
+    
+    static NSDictionary* deviceNamesByCode = nil;
+    
+    if (!deviceNamesByCode) {
+        
+        deviceNamesByCode = @{@"i386"      :@"Simulator",
+                              @"x86_64"    :@"Simulator",
+                              @"iPod1,1"   :@"iPod Touch",        // (Original)
+                              @"iPod2,1"   :@"iPod Touch",        // (Second Generation)
+                              @"iPod3,1"   :@"iPod Touch",        // (Third Generation)
+                              @"iPod4,1"   :@"iPod Touch",        // (Fourth Generation)
+                              @"iPod7,1"   :@"iPod Touch",        // (6th Generation)
+                              @"iPhone1,1" :@"iPhone",            // (Original)
+                              @"iPhone1,2" :@"iPhone",            // (3G)
+                              @"iPhone2,1" :@"iPhone",            // (3GS)
+                              @"iPad1,1"   :@"iPad",              // (Original)
+                              @"iPad2,1"   :@"iPad 2",            //
+                              @"iPad3,1"   :@"iPad",              // (3rd Generation)
+                              @"iPhone3,1" :@"iPhone 4",          // (GSM)
+                              @"iPhone3,3" :@"iPhone 4",          // (CDMA/Verizon/Sprint)
+                              @"iPhone4,1" :@"iPhone 4S",         //
+                              @"iPhone5,1" :@"iPhone 5",          // (model A1428, AT&T/Canada)
+                              @"iPhone5,2" :@"iPhone 5",          // (model A1429, everything else)
+                              @"iPad3,4"   :@"iPad",              // (4th Generation)
+                              @"iPad2,5"   :@"iPad Mini",         // (Original)
+                              @"iPhone5,3" :@"iPhone 5c",         // (model A1456, A1532 | GSM)
+                              @"iPhone5,4" :@"iPhone 5c",         // (model A1507, A1516, A1526 (China), A1529 | Global)
+                              @"iPhone6,1" :@"iPhone 5s",         // (model A1433, A1533 | GSM)
+                              @"iPhone6,2" :@"iPhone 5s",         // (model A1457, A1518, A1528 (China), A1530 | Global)
+                              @"iPhone7,1" :@"iPhone 6 Plus",     //
+                              @"iPhone7,2" :@"iPhone 6",          //
+                              @"iPhone8,1" :@"iPhone 6S",         //
+                              @"iPhone8,2" :@"iPhone 6S Plus",    //
+                              @"iPhone8,4" :@"iPhone SE",         //
+                              @"iPhone9,1" :@"iPhone 7",          //
+                              @"iPhone9,3" :@"iPhone 7",          //
+                              @"iPhone9,2" :@"iPhone 7 Plus",     //
+                              @"iPhone9,4" :@"iPhone 7 Plus",     //
+                              
+                              @"iPad4,1"   :@"iPad Air",          // 5th Generation iPad (iPad Air) - Wifi
+                              @"iPad4,2"   :@"iPad Air",          // 5th Generation iPad (iPad Air) - Cellular
+                              @"iPad4,4"   :@"iPad Mini",         // (2nd Generation iPad Mini - Wifi)
+                              @"iPad4,5"   :@"iPad Mini",         // (2nd Generation iPad Mini - Cellular)
+                              @"iPad4,7"   :@"iPad Mini",         // (3rd Generation iPad Mini - Wifi (model A1599))
+                              @"iPad6,7"   :@"iPad Pro (12.9\")", // iPad Pro 12.9 inches - (model A1584)
+                              @"iPad6,8"   :@"iPad Pro (12.9\")", // iPad Pro 12.9 inches - (model A1652)
+                              @"iPad6,3"   :@"iPad Pro (9.7\")",  // iPad Pro 9.7 inches - (model A1673)
+                              @"iPad6,4"   :@"iPad Pro (9.7\")"   // iPad Pro 9.7 inches - (models A1674 and A1675)
+                              };
+    }
+    
+    NSString* deviceName = [deviceNamesByCode objectForKey:code];
+    
+    if (!deviceName) {
+        // Not found on database. At least guess main device type from string contents:
+        
+        if ([code rangeOfString:@"iPod"].location != NSNotFound) {
+            deviceName = @"iPod Touch";
+        }
+        else if([code rangeOfString:@"iPad"].location != NSNotFound) {
+            deviceName = @"iPad";
+        }
+        else if([code rangeOfString:@"iPhone"].location != NSNotFound){
+            deviceName = @"iPhone";
+        }
+        else {
+            deviceName = @"Unknown";
+        }
+    }
+    
+    return deviceName;
+}
 
 @end

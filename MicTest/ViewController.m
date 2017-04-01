@@ -29,6 +29,7 @@
     int _audioSampleCountSinceLastLocation;
     
     float _averageAudioPowerSinceLastLocation;
+    float _averageAudioPowerLowPassSinceLastLocation;
     
     double _latestLat, _latestLon;
 }
@@ -44,15 +45,16 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)audioRecognized:(ARAudioRecognizer *)recognizer
-{
-//    NSLog(@"audioRecognized");
-}
 
 - (void)audioLevelUpdated:(ARAudioRecognizer *)recognizer
                     level:(float)lowPassResults
 {
 //    NSLog(@"audioLevelUpdated level");
+    _averageAudioPowerLowPassSinceLastLocation =
+    
+    // Find average, weighting all samples equally
+    _averageAudioPowerLowPassSinceLastLocation = ((_averageAudioPowerLowPassSinceLastLocation * _audioSampleCountSinceLastLocation) + lowPassResults) / (_audioSampleCountSinceLastLocation+1);
+    
 }
 
 - (void)audioLevelUpdated:(ARAudioRecognizer *)recognizer
@@ -64,8 +66,10 @@
         // Invalid power, skip it
         return;
     }
+    
     // Find average, weighting all samples equally
     _averageAudioPowerSinceLastLocation = ((_averageAudioPowerSinceLastLocation * _audioSampleCountSinceLastLocation) + averagePower) / (_audioSampleCountSinceLastLocation+1);
+    
     _audioSampleCountSinceLastLocation++;
 }
 
@@ -99,6 +103,7 @@
                            [dateFormat stringFromDate:[NSDate date]],
                            [timeFormat stringFromDate:[NSDate date]],
                            [NSNumber numberWithFloat:_averageAudioPowerSinceLastLocation],
+                           [NSNumber numberWithFloat:_averageAudioPowerLowPassSinceLastLocation],
                            ];
     
     [self writeToLogFile:dataToLog];
@@ -115,6 +120,7 @@
     
     // Reset audio info
     _averageAudioPowerSinceLastLocation = 0.0;
+    _averageAudioPowerLowPassSinceLastLocation = 0.0;
     _audioSampleCountSinceLastLocation = 0;
 }
 
@@ -180,7 +186,9 @@
                                 @"Speed",
                                 @"Date",
                                 @"Time",
-                                @"dB"];
+                                @"dB-Avg",
+                                @"dB-Lowpass",
+                               ];
 
         [self writeToLogFile:dataToLog];
         

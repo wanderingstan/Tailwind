@@ -10,6 +10,9 @@
 #import <AVFoundation/AVFoundation.h>
 #import <CoreAudio/CoreAudioTypes.h>
 
+#define ALPHA 0.05
+#define SAMPLE_INTERVAL 0.03
+
 @interface ARAudioRecognizer ()
 
 @property (nonatomic, strong) AVAudioRecorder *recorder;
@@ -153,18 +156,24 @@
 
 - (void)initializeLevelTimer
 {
-    self.levelTimer = [NSTimer scheduledTimerWithTimeInterval: 0.03 target: self selector: @selector(levelTimerCallback:) userInfo: nil repeats: YES];
+    // 1/0.03 = 33.3333333333 samples/second
+    self.levelTimer = [NSTimer scheduledTimerWithTimeInterval:SAMPLE_INTERVAL
+                                                       target:self
+                                                     selector:@selector(levelTimerCallback:)
+                                                     userInfo:nil
+                                                      repeats:YES];
 }
 
 - (void)levelTimerCallback:(NSTimer *)timer
 {
 	[self.recorder updateMeters];
     
-	const double ALPHA = 0.1;
-	double peakPowerForChannel = pow(10, (0.05 * [self.recorder peakPowerForChannel:0]));
+	double peakPowerForChannel = pow(10, (SAMPLE_INTERVAL * [self.recorder peakPowerForChannel:0]));
 	_lowPassResults = ALPHA * peakPowerForChannel + (1.0 - ALPHA) * self.lowPassResults;
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(audioLevelUpdated:level:)]) {
+        // See: http://stackoverflow.com/a/43161536/59913
+        // See: http://stackoverflow.com/questions/31230854/ios-detect-blow-into-mic-and-convert-the-results-swift
         [self.delegate audioLevelUpdated:self level:self.lowPassResults];
     }
     

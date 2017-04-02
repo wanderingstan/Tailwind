@@ -12,11 +12,10 @@
 
 @protocol ARAudioRecognizerDelegate <NSObject>
 
-@required
-- (void)audioRecognized:(ARAudioRecognizer *)recognizer;
-
 @optional
-- (void)audioLevelUpdated:(ARAudioRecognizer *)recognizer level:(float)lowPassResults;
-- (void)audioLevelUpdated:(ARAudioRecognizer *)recognizer averagePower:(float)averagePower peakPower:(float)peakPower;
+- (void)audioLevelUpdated:(ARAudioRecognizer *)recognizer
+             averagePower:(float)averagePower
+                peakPower:(float)peakPower
+                  lowPass:(float)lowPassResults;
 
 @end

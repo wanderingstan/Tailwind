@@ -45,20 +45,13 @@
     // Dispose of any resources that can be recreated.
 }
 
-
+/**
+ * Callback from audio
+ */
 - (void)audioLevelUpdated:(ARAudioRecognizer *)recognizer
-                    level:(float)lowPassResults
-{
-//    NSLog(@"audioLevelUpdated level");
-    _averageAudioPowerLowPassSinceLastLocation =
-    
-    // Find average, weighting all samples equally
-    _averageAudioPowerLowPassSinceLastLocation = ((_averageAudioPowerLowPassSinceLastLocation * _audioSampleCountSinceLastLocation) + lowPassResults) / (_audioSampleCountSinceLastLocation+1);
-    
-}
-
-- (void)audioLevelUpdated:(ARAudioRecognizer *)recognizer
-             averagePower:(float)averagePower peakPower:(float)peakPower
+             averagePower:(float)averagePower
+                peakPower:(float)peakPower
+                  lowPass:(float)lowPassResults
 {
 //    NSLog(@"audioLevelUpdated averagePower: %f", averagePower);
     
@@ -67,6 +60,9 @@
         return;
     }
     
+    // Lowpass, weighting all samples equally
+    _averageAudioPowerLowPassSinceLastLocation = ((_averageAudioPowerLowPassSinceLastLocation * _audioSampleCountSinceLastLocation) + lowPassResults) / (_audioSampleCountSinceLastLocation+1);
+
     // Find average, weighting all samples equally
     _averageAudioPowerSinceLastLocation = ((_averageAudioPowerSinceLastLocation * _audioSampleCountSinceLastLocation) + averagePower) / (_audioSampleCountSinceLastLocation+1);
     
@@ -100,6 +96,7 @@
                            [NSNumber numberWithDouble:newLocation.coordinate.longitude],
                            [NSNumber numberWithDouble:newLocation.altitude],
                            [NSNumber numberWithFloat:newLocation.speed],
+                           [NSNumber numberWithFloat:newLocation.course],
                            [dateFormat stringFromDate:[NSDate date]],
                            [timeFormat stringFromDate:[NSDate date]],
                            [NSNumber numberWithFloat:_averageAudioPowerSinceLastLocation],
@@ -180,14 +177,15 @@
         _sampleIndex = 0;
         
         NSArray* dataToLog = @[@"No",
-                                @"Latitude",
-                                @"Longitude",
-                                @"Altitude",
-                                @"Speed",
-                                @"Date",
-                                @"Time",
-                                @"dB-Avg",
-                                @"dB-Lowpass",
+                               @"Latitude",
+                               @"Longitude",
+                               @"Altitude",
+                               @"Speed",
+                               @"Course",
+                               @"Date",
+                               @"Time",
+                               @"dB-Avg",
+                               @"dB-Lowpass",
                                ];
 
         [self writeToLogFile:dataToLog];

@@ -11,7 +11,6 @@
 #import <CoreAudio/CoreAudioTypes.h>
 
 #define ALPHA 0.05
-#define SAMPLE_INTERVAL 0.03
 
 @interface ARAudioRecognizer ()
 
@@ -157,7 +156,7 @@
 - (void)initializeLevelTimer
 {
     // 1/0.03 = 33.3333333333 samples/second
-    self.levelTimer = [NSTimer scheduledTimerWithTimeInterval:SAMPLE_INTERVAL
+    self.levelTimer = [NSTimer scheduledTimerWithTimeInterval:_frequency
                                                        target:self
                                                      selector:@selector(levelTimerCallback:)
                                                      userInfo:nil
@@ -168,23 +167,20 @@
 {
 	[self.recorder updateMeters];
     
-	double peakPowerForChannel = pow(10, (SAMPLE_INTERVAL * [self.recorder peakPowerForChannel:0]));
+    // Simple lowpass filter
+    // See: http://stackoverflow.com/questions/6097797/low-pass-filter-in-iphone
+    
+	double peakPowerForChannel = pow(10, (_frequency * [self.recorder peakPowerForChannel:0]));
 	_lowPassResults = ALPHA * peakPowerForChannel + (1.0 - ALPHA) * self.lowPassResults;
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(audioLevelUpdated:level:)]) {
-        // See: http://stackoverflow.com/a/43161536/59913
-        // See: http://stackoverflow.com/questions/31230854/ios-detect-blow-into-mic-and-convert-the-results-swift
-        [self.delegate audioLevelUpdated:self level:self.lowPassResults];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(audioLevelUpdated:averagePower:peakPower:lowPass:)]) {
+        [self.delegate audioLevelUpdated:self
+                            averagePower:[self.recorder averagePowerForChannel:0]
+                               peakPower:[self.recorder peakPowerForChannel:0]
+                                 lowPass:self.lowPassResults
+         ];
     }
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(audioLevelUpdated:averagePower:peakPower:)]) {
-        [self.delegate audioLevelUpdated:self averagePower:[self.recorder averagePowerForChannel:0] peakPower:[self.recorder peakPowerForChannel:0]];
-    }
-    
-	if (self.lowPassResults > 0.95 && self.delegate && [self.delegate respondsToSelector:@selector(audioRecognized:)]) {
-        [self.delegate audioRecognized:self];
-        _lowPassResults = 0.0f;
-    }
 }
 
 

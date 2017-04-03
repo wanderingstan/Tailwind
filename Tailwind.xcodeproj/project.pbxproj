@@ -19,7 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		F6BC18BA1E89CBC200EB123C /* MicTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MicTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6BC18BA1E89CBC200EB123C /* Tailwind.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tailwind.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6BC18BE1E89CBC200EB123C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F6BC18C01E89CBC200EB123C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F6BC18C11E89CBC200EB123C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -60,7 +60,7 @@
 		F6BC18BB1E89CBC200EB123C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F6BC18BA1E89CBC200EB123C /* MicTest.app */,
+				F6BC18BA1E89CBC200EB123C /* Tailwind.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -112,9 +112,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F6BC18B91E89CBC200EB123C /* MicTest */ = {
+		F6BC18B91E89CBC200EB123C /* Tailwind */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F6BC18D11E89CBC200EB123C /* Build configuration list for PBXNativeTarget "MicTest" */;
+			buildConfigurationList = F6BC18D11E89CBC200EB123C /* Build configuration list for PBXNativeTarget "Tailwind" */;
 			buildPhases = (
 				F6BC18B61E89CBC200EB123C /* Sources */,
 				F6BC18B71E89CBC200EB123C /* Frameworks */,
@@ -124,9 +124,9 @@
 			);
 			dependencies = (
 			);
-			name = MicTest;
+			name = Tailwind;
 			productName = MicTest;
-			productReference = F6BC18BA1E89CBC200EB123C /* MicTest.app */;
+			productReference = F6BC18BA1E89CBC200EB123C /* Tailwind.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -150,7 +150,7 @@
 					};
 				};
 			};
-			buildConfigurationList = F6BC18B51E89CBC200EB123C /* Build configuration list for PBXProject "MicTest" */;
+			buildConfigurationList = F6BC18B51E89CBC200EB123C /* Build configuration list for PBXProject "Tailwind" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -163,7 +163,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F6BC18B91E89CBC200EB123C /* MicTest */,
+				F6BC18B91E89CBC200EB123C /* Tailwind */,
 			);
 		};
 /* End PBXProject section */
@@ -311,7 +311,7 @@
 				DEVELOPMENT_TEAM = PNPVJ6J7X2;
 				INFOPLIST_FILE = MicTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.wanderingstan.mic-test.MicTest";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wanderingstan.tailwind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -323,7 +323,7 @@
 				DEVELOPMENT_TEAM = PNPVJ6J7X2;
 				INFOPLIST_FILE = MicTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.wanderingstan.mic-test.MicTest";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wanderingstan.tailwind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -331,7 +331,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F6BC18B51E89CBC200EB123C /* Build configuration list for PBXProject "MicTest" */ = {
+		F6BC18B51E89CBC200EB123C /* Build configuration list for PBXProject "Tailwind" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F6BC18CF1E89CBC200EB123C /* Debug */,
@@ -340,7 +340,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F6BC18D11E89CBC200EB123C /* Build configuration list for PBXNativeTarget "MicTest" */ = {
+		F6BC18D11E89CBC200EB123C /* Build configuration list for PBXNativeTarget "Tailwind" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F6BC18D21E89CBC200EB123C /* Debug */,

@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:MicTest.xcodeproj">
+      location = "self:/Users/stan/Documents/Personal_Programming_Projects/Tailwind/headwind/Tailwind.xcodeproj">
    </FileRef>
 </Workspace>

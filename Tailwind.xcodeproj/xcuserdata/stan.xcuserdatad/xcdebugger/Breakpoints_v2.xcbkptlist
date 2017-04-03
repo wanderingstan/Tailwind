@@ -127,7 +127,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "64"
             endingLineNumber = "64"
-            landmarkName = "-audioLevelUpdated:averagePower:peakPower:"
+            landmarkName = "-audioLevelUpdated:averagePower:peakPower:lowPass:"
             landmarkType = "7">
             <Actions>
                <BreakpointActionProxy
@@ -151,7 +151,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "74"
             endingLineNumber = "74"
-            landmarkName = "-locationManager:didUpdateToLocation:fromLocation:"
+            landmarkName = "-audioLevelUpdated:averagePower:peakPower:lowPass:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -167,7 +167,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "63"
             endingLineNumber = "63"
-            landmarkName = "-audioLevelUpdated:averagePower:peakPower:"
+            landmarkName = "-audioLevelUpdated:averagePower:peakPower:lowPass:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -183,7 +183,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "60"
             endingLineNumber = "60"
-            landmarkName = "-audioLevelUpdated:averagePower:peakPower:"
+            landmarkName = "-audioLevelUpdated:averagePower:peakPower:lowPass:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

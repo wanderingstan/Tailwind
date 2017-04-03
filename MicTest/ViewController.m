@@ -6,6 +6,10 @@
 //  Copyright © 2017 Stan James. All rights reserved.
 //
 
+// BLowing icon
+// http://www.flaticon.com/free-icon/wind-sign_72579#term=wind&page=1&position=36
+// Icon made by Freepik from www.freepik.com
+
 // http://gis.stackexchange.com/questions/202455/how-to-extract-the-speed-from-a-gpx-file
 
 #import "ViewController.h"
@@ -22,7 +26,8 @@
     CLLocationManager *_locationManager;
     
     BOOL isRecording;
-    NSString *_sessionFileName; // Filename for this session--no extension
+    NSString *_sessionName;
+    NSString *_sessionFilePathName; // PathFilename for this session--no extension
     //NSString *_logFilePathName;
     
     int _sampleIndex;
@@ -173,7 +178,8 @@
     {
         int timestamp = [[NSDate date] timeIntervalSince1970];
         NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        _sessionFileName = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"log_%@_%d", @"test", timestamp]];
+        _sessionName = [NSString stringWithFormat:@"tailwind_%d", timestamp];
+        _sessionFilePathName = [documentsDirectory stringByAppendingPathComponent:_sessionName];
         _sampleIndex = 0;
         
         NSArray* dataToLog = @[@"No",
@@ -231,14 +237,14 @@
     
     // Attach an image to the email
     {
-        NSString* logFilePathName = [NSString stringWithFormat:@"%@.csv",_sessionFileName];
+        NSString* logFilePathName = [NSString stringWithFormat:@"%@.csv",_sessionFilePathName];
         NSData *data = [[NSFileManager defaultManager] contentsAtPath:logFilePathName];
-        [picker addAttachmentData:data mimeType:@"text/csv" fileName:@"speed-volume-file.csv"];
+        [picker addAttachmentData:data mimeType:@"text/csv" fileName:[NSString stringWithFormat:@"%@_data.csv",_sessionName]];
     }
     {
-        NSString* logFilePathName = [NSString stringWithFormat:@"%@_weather.xml", _sessionFileName];
+        NSString* logFilePathName = [NSString stringWithFormat:@"%@_weather.xml", _sessionFilePathName];
         NSData *data = [[NSFileManager defaultManager] contentsAtPath:logFilePathName];
-        [picker addAttachmentData:data mimeType:@"text/xml" fileName:@"weather.xml"];
+        [picker addAttachmentData:data mimeType:@"text/xml" fileName:[NSString stringWithFormat:@"%@_weather.xml",_sessionName]];
     }
 
     // Fill out the email body text
@@ -283,7 +289,7 @@
  */
 - (void)writeToLogFile:(NSArray*)logDataArray
 {
-    NSString* logFilePathName = [NSString stringWithFormat:@"%@.csv",_sessionFileName];
+    NSString* logFilePathName = [NSString stringWithFormat:@"%@.csv",_sessionFilePathName];
     
     NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:logFilePathName];
     if (myHandle == nil) {
@@ -313,7 +319,7 @@
         NSURL  *url = [NSURL URLWithString:urlToDownload];
         NSData *urlData = [NSData dataWithContentsOfURL:url];
         if (urlData) {
-            NSString* weatherFilePathName = [NSString stringWithFormat:@"%@_weather.xml",_sessionFileName];
+            NSString* weatherFilePathName = [NSString stringWithFormat:@"%@_weather.xml",_sessionFilePathName];
             
             //saving is done on main thread
             dispatch_async(dispatch_get_main_queue(), ^{

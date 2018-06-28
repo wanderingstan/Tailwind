@@ -25,8 +25,11 @@
 @property (nonatomic, readonly) float sensitivity;
 @property (nonatomic, readonly) float frequency;
 @property (nonatomic, readonly) float lowPassResults;
+@property (nonatomic, readonly) NSString *micOrientation;
 
-- (id)initWithSensitivity:(float)sensitivity frequency:(float)frequency;
+- (id)initWithSensitivity:(float)sensitivity
+                frequency:(float)frequency
+           micOrientation:(NSString*)micOrientation;
 - (void)stop;
 
 @end

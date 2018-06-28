@@ -26,14 +26,14 @@
 @implementation ARAudioRecognizer
 
 @synthesize delegate = _delegate;
-@synthesize sensitivity = _sensitivity, frequency = _frequency, lowPassResults = _lowPassResults;
+@synthesize sensitivity = _sensitivity, frequency = _frequency, lowPassResults = _lowPassResults, micOrientation = _micOrientation;
 
 - (id)init
 {
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
-
     return [self initWithSensitivity:AR_AUDIO_RECOGNIZER_SENSITIVITY_DEFAULT
-                           frequency:AR_AUDIO_RECOGNIZER_FREQUENCY_DEFAULT];
+                           frequency:AR_AUDIO_RECOGNIZER_FREQUENCY_DEFAULT
+                         micOrientation:AVAudioSessionOrientationFront];
+    // Other valid Mic Location for tested iPhones is `AVAudioSessionOrientationBottom`
 }
 
 -(void)stop
@@ -41,12 +41,16 @@
     [self.recorder stop];
 }
 
-- (id)initWithSensitivity:(float)sensitivity frequency:(float)frequency
+
+- (id)initWithSensitivity:(float)sensitivity frequency:(float)frequency micOrientation:(NSString*)micOrientation
 {
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+
     if (self = [super init]) {
         _sensitivity = sensitivity;
         _frequency = frequency;
         _lowPassResults = 0.0f;
+        _micOrientation = micOrientation;
     }
     
     [self initializeRecorder];
@@ -78,7 +82,7 @@
         [self.session setMode: AVAudioSessionModeMeasurement error:NULL];
     }
 
-    // Switch to front mic
+    // Switch to desired mic
     [self demonstrateInputSelection];
 
     // Try to change gain
@@ -126,27 +130,31 @@
     NSLog(@"There are %u data sources for port :\"%@\"", (unsigned)[builtInMicPort.dataSources count], builtInMicPort);
     NSLog(@"%@", builtInMicPort.dataSources);
     // loop over the built-in mic's data sources and attempt to locate the front microphone
-    AVAudioSessionDataSourceDescription* frontDataSource = nil;
+    AVAudioSessionDataSourceDescription* micDataSource = nil;
     for (AVAudioSessionDataSourceDescription* source in builtInMicPort.dataSources)
     {
-        if ([source.orientation isEqual:AVAudioSessionOrientationFront])
+        if ([source.orientation isEqual:_micOrientation])
         {
-            frontDataSource = source;
+            NSLog(@"Using desired mic orientation: %@", source.orientation);
+            micDataSource = source;
             break;
         }
     } // end data source iteration
-    if (frontDataSource)
+    if (micDataSource)
     {
         NSLog(@"Currently selected source is \"%@\" for port \"%@\"", builtInMicPort.selectedDataSource.dataSourceName, builtInMicPort.portName);
-        NSLog(@"Attempting to select source \"%@\" on port \"%@\"", frontDataSource, builtInMicPort.portName);
+        NSLog(@"Attempting to select source \"%@\" on port \"%@\"", micDataSource, builtInMicPort.portName);
         // Set a preference for the front data source.
         theError = nil;
-        result = [builtInMicPort setPreferredDataSource:frontDataSource error:&theError];
+        result = [builtInMicPort setPreferredDataSource:micDataSource error:&theError];
         if (!result)
         {
             // an error occurred. Handle it!
             NSLog(@"setPreferredDataSource failed");
         }
+    }
+    else {
+        NSLog(@"No micDataSource");
     }
     // Make sure the built-in mic is selected for input. This will be a no-op if the built-in mic is
     // already the current input Port.

@@ -21,6 +21,9 @@
 #import <sys/utsname.h> // For device name
 #import <AVFoundation/AVFoundation.h>
 
+// How many seconds between flipping the mics?
+#define MIC_ORIENTATION_TIMER_DELAY 2.0f
+
 @interface ViewController ()
 @end
 
@@ -29,6 +32,7 @@
     ARAudioRecognizer *_audioRecognizer;
     
     CLLocationManager *_locationManager;
+    NSTimer *_micOrientationTimer;
     
     BOOL isRecording;
     NSString *_sessionName;
@@ -151,15 +155,34 @@
 }
 
 
+- (void)micOrientationTimerFired:(NSTimer*)theTimer
+{
+    // Flip between mics
+    NSString* newMicOrientation = ((_audioRecognizer && [_audioRecognizer.micOrientation isEqual:AVAudioSessionOrientationFront])
+                                   ? AVAudioSessionOrientationBottom
+                                   : AVAudioSessionOrientationFront);
+    // Stop old recognizer
+    if (_audioRecognizer) {
+        [_audioRecognizer stop];
+        _audioRecognizer.delegate = nil;
+    }
+    
+    // Make new recognizer
+    _audioRecognizer = [[ARAudioRecognizer alloc] initWithSensitivity:AR_AUDIO_RECOGNIZER_SENSITIVITY_MODERATE
+                                                            frequency:AR_AUDIO_RECOGNIZER_FREQUENCY_LOW
+                                                       micOrientation:newMicOrientation];
+    _audioRecognizer.delegate = self;
+}
 
 - (void)startLogging
 {
     // Setup mic
     {
-        _audioRecognizer = [[ARAudioRecognizer alloc] initWithSensitivity:AR_AUDIO_RECOGNIZER_SENSITIVITY_MODERATE
-                                                                frequency:AR_AUDIO_RECOGNIZER_FREQUENCY_LOW
-                                                           micOrientation:AVAudioSessionOrientationFront];
-        _audioRecognizer.delegate = self;
+        _micOrientationTimer = [NSTimer scheduledTimerWithTimeInterval:MIC_ORIENTATION_TIMER_DELAY
+                                                                target:self
+                                                              selector:@selector(micOrientationTimerFired:)
+                                                              userInfo:nil
+                                                               repeats:YES];
     }
     
     // Setup location

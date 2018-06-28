@@ -72,12 +72,19 @@
     
     self.session = [AVAudioSession sharedInstance];
 
-    // Turn off apple filters
-    // http://stackoverflow.com/a/15526007/59913
-    [self.session setMode: AVAudioSessionModeMeasurement error:NULL];
+    {
+        // Turn off apple filters
+        // http://stackoverflow.com/a/15526007/59913
+        [self.session setMode: AVAudioSessionModeMeasurement error:NULL];
+    }
 
     // Switch to front mic
     [self demonstrateInputSelection];
+
+    // Try to change gain
+    if (![self.session isInputGainSettable]) {
+        NSLog(@"Gain is not settable");
+    }
     
   	if (self.recorder) {
   		[self.recorder prepareToRecord];
@@ -147,7 +154,7 @@
     result = [myAudioSession setPreferredInput:builtInMicPort error:&theError];
     if (!result)
     {
-        // an error occurred. Handle it!
+        // an error occurred. Handle it!ap
         NSLog(@"setPreferredInput failed");
     }
 }

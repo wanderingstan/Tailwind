@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MicTest/iOS-Audio-Recoginzer-master/ARAudioRecognizer.m"
-            timestampString = "512582559.015752"
+            timestampString = "551673168.631483"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "167"
-            endingLineNumber = "167"
-            landmarkName = "-levelTimerCallback:"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
+            landmarkName = "-initializeLevelTimer"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MicTest/iOS-Audio-Recoginzer-master/ARAudioRecognizer.m"
-            timestampString = "512582559.015752"
+            timestampString = "551673168.632162"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "72"
@@ -42,7 +42,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MicTest/iOS-Audio-Recoginzer-master/ARAudioRecognizer.m"
-            timestampString = "512582559.015752"
+            timestampString = "551673168.632357"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "73"
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MicTest/iOS-Audio-Recoginzer-master/ARAudioRecognizer.m"
-            timestampString = "512582559.015752"
+            timestampString = "551673168.632535"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "112"
-            endingLineNumber = "112"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
             landmarkName = "-demonstrateInputSelection"
             landmarkType = "7">
          </BreakpointContent>
@@ -74,12 +74,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MicTest/ViewController.m"
-            timestampString = "512608022.50943"
+            timestampString = "512972941.665913"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
-            landmarkName = "-locationManager:didUpdateToLocation:fromLocation:"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "-audioLevelUpdated:averagePower:peakPower:lowPass:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -90,12 +90,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MicTest/ViewController.m"
-            timestampString = "512608022.50943"
+            timestampString = "512972941.665913"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
-            landmarkName = "-startLogging"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
+            landmarkName = "-startStopLoggingAction:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -106,7 +106,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MicTest/iOS-Audio-Recoginzer-master/ARAudioRecognizer.m"
-            timestampString = "512582698.37103"
+            timestampString = "551673168.63274"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "40"
@@ -122,12 +122,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "Yes"
             filePath = "MicTest/ViewController.m"
-            timestampString = "512608022.50943"
+            timestampString = "512972941.665913"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
-            landmarkName = "-audioLevelUpdated:averagePower:peakPower:lowPass:"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "-didReceiveMemoryWarning"
             landmarkType = "7">
             <Actions>
                <BreakpointActionProxy
@@ -146,11 +146,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MicTest/ViewController.m"
-            timestampString = "512608022.50943"
+            timestampString = "512972941.665913"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
             landmarkName = "-audioLevelUpdated:averagePower:peakPower:lowPass:"
             landmarkType = "7">
          </BreakpointContent>
@@ -162,12 +162,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MicTest/ViewController.m"
-            timestampString = "512608022.50943"
+            timestampString = "512972941.665913"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
-            landmarkName = "-audioLevelUpdated:averagePower:peakPower:lowPass:"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "-didReceiveMemoryWarning"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -178,12 +178,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MicTest/ViewController.m"
-            timestampString = "512608028.741094"
+            timestampString = "512972941.665913"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
-            landmarkName = "-audioLevelUpdated:averagePower:peakPower:lowPass:"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "-viewDidLoad"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MicTest/iOS-Audio-Recoginzer-master/ARAudioRecognizer.m"
+            timestampString = "551673168.632962"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "-initializeRecorder"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

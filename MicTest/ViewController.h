@@ -14,9 +14,10 @@
 
 @interface ViewController : UIViewController <ARAudioRecognizerDelegate, CLLocationManagerDelegate, MFMailComposeViewControllerDelegate>
 
-- (void)audioRecognized:(ARAudioRecognizer *)recognizer;
-- (void)audioLevelUpdated:(ARAudioRecognizer *)recognizer level:(float)lowPassResults;
-- (void)audioLevelUpdated:(ARAudioRecognizer *)recognizer averagePower:(float)averagePower peakPower:(float)peakPower;
+- (void)audioLevelUpdated:(ARAudioRecognizer *)recognizer
+             averagePower:(float)averagePower
+                peakPower:(float)peakPower
+                  lowPass:(float)lowPassResults;
 
 // UI
 @property (weak, nonatomic) IBOutlet UILabel *debugLabel;

@@ -6,6 +6,10 @@
 //  Copyright © 2017 Stan James. All rights reserved.
 //
 
+// What?? No gain on iPhone 6s
+// https://forums.developer.apple.com/thread/21980
+// http://recorderplus.dyndns.org/?ht_kb=can-not-adjust-input-gain-on-iphone-6s
+
 // BLowing icon
 // http://www.flaticon.com/free-icon/wind-sign_72579#term=wind&page=1&position=36
 // Icon made by Freepik from www.freepik.com
@@ -15,6 +19,7 @@
 #import "ViewController.h"
 #include <AudioToolbox/AudioToolbox.h>
 #import <sys/utsname.h> // For device name
+#import <AVFoundation/AVFoundation.h>
 
 @interface ViewController ()
 @end
@@ -40,6 +45,7 @@
 }
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
 
 }

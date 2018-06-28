@@ -14,7 +14,10 @@ Currently, the app simply logs microphone and GPS data to a `.csv` file that can
 - Green line above blue lines means headwind; airspeed is higher than expected for groundspeed.
 
 ## Refined analysis of later ride
+[Google Sheet of Ride Data](https://docs.google.com/spreadsheets/d/1NuRT2WWrLtoPws-C2KsLPZbLnIgmoRGPuB6BTQKMl-I/edit?usp=sharing)
+
 ![image](https://user-images.githubusercontent.com/673455/42013852-6880bcee-7a5c-11e8-9a53-1094679e04ad.png)
+
 
 ## Screenshot
 <img width="300" alt="first ride" src="https://user-images.githubusercontent.com/673455/42013611-5b93a150-7a5b-11e8-91c1-8f38aa0ea757.PNG">

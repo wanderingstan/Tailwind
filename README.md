@@ -1,7 +1,7 @@
 # Tailwind
 Experimental iOS app for measuring headwinds and tailwinds while cycling.
 
-This simple app is based on the insight that a [microphone also works as an anemometer]https://www.youtube.com/watch?v=Ye-C6J7Ku90)—it can measure windspeed. 
+This simple app is based on the insight that a [microphone also works as an anemometer](https://www.youtube.com/watch?v=Ye-C6J7Ku90)—it can measure windspeed. 
 
 By comparing GPS data with measured decibel values, it is possible to detect the strength of headwinds and tailwinds.
 

@@ -7,6 +7,11 @@ By comparing GPS data with measured decibel values, it is possible to detect the
 
 Currently, the app simply logs microphone and GPS data to a `.csv` file that can be analyzed in a spreadsheet or imported to other tools. 
 
+The phone is mounted on bike via a [mount like this one](https://www.amazon.com/gp/product/B074CBYVX4/ref=oh_aui_detailpage_o08_s00?ie=UTF8&psc=1).
+
+![image](https://user-images.githubusercontent.com/673455/42014051-77878a8c-7a5d-11e8-839f-a4cb810c5df6.png)
+
+
 ## First Ride
 <img width="780" alt="first ride" src="https://user-images.githubusercontent.com/673455/42013725-d98193ce-7a5b-11e8-8df2-de761cd307db.png">
 

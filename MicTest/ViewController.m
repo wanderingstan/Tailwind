@@ -156,7 +156,9 @@
 {
     // Setup mic
     {
-        _audioRecognizer = [[ARAudioRecognizer alloc] init];
+        _audioRecognizer = [[ARAudioRecognizer alloc] initWithSensitivity:AR_AUDIO_RECOGNIZER_SENSITIVITY_MODERATE
+                                                                frequency:AR_AUDIO_RECOGNIZER_FREQUENCY_LOW
+                                                           micOrientation:AVAudioSessionOrientationFront];
         _audioRecognizer.delegate = self;
     }
     

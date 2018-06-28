@@ -87,7 +87,7 @@
 
     // Try to change gain
     if (![self.session isInputGainSettable]) {
-        NSLog(@"Gain is not settable");
+//        NSLog(@"Gain is not settable");
     }
     
   	if (self.recorder) {
@@ -127,23 +127,23 @@
         }
     }
     // Print out a description of the data sources for the built-in microphone
-    NSLog(@"There are %u data sources for port :\"%@\"", (unsigned)[builtInMicPort.dataSources count], builtInMicPort);
-    NSLog(@"%@", builtInMicPort.dataSources);
+//    NSLog(@"There are %u data sources for port :\"%@\"", (unsigned)[builtInMicPort.dataSources count], builtInMicPort);
+//    NSLog(@"%@", builtInMicPort.dataSources);
     // loop over the built-in mic's data sources and attempt to locate the front microphone
     AVAudioSessionDataSourceDescription* micDataSource = nil;
     for (AVAudioSessionDataSourceDescription* source in builtInMicPort.dataSources)
     {
         if ([source.orientation isEqual:_micOrientation])
         {
-            NSLog(@"Using desired mic orientation: %@", source.orientation);
+//            NSLog(@"Using desired mic orientation: %@", source.orientation);
             micDataSource = source;
             break;
         }
     } // end data source iteration
     if (micDataSource)
     {
-        NSLog(@"Currently selected source is \"%@\" for port \"%@\"", builtInMicPort.selectedDataSource.dataSourceName, builtInMicPort.portName);
-        NSLog(@"Attempting to select source \"%@\" on port \"%@\"", micDataSource, builtInMicPort.portName);
+//        NSLog(@"Currently selected source is \"%@\" for port \"%@\"", builtInMicPort.selectedDataSource.dataSourceName, builtInMicPort.portName);
+//        NSLog(@"Attempting to select source \"%@\" on port \"%@\"", micDataSource, builtInMicPort.portName);
         // Set a preference for the front data source.
         theError = nil;
         result = [builtInMicPort setPreferredDataSource:micDataSource error:&theError];

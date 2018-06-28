@@ -116,6 +116,7 @@
                            [timeFormat stringFromDate:[NSDate date]],
                            [NSNumber numberWithFloat:_averageAudioPowerSinceLastLocation],
                            [NSNumber numberWithFloat:_averageAudioPowerLowPassSinceLastLocation],
+                           _audioRecognizer.micOrientation,
                            ];
     
     [self writeToLogFile:dataToLog];
@@ -220,6 +221,7 @@
                                @"Time",
                                @"dB-Avg",
                                @"dB-Lowpass",
+                               @"micOrientation",
                                ];
 
         [self writeToLogFile:dataToLog];

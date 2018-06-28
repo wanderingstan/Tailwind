@@ -130,6 +130,9 @@
     _latestLat = newLocation.coordinate.latitude;
     _latestLon = newLocation.coordinate.longitude;
     
+    // Switch mics for next sample
+    [self toggleMics];
+
     // Reset audio info
     _averageAudioPowerSinceLastLocation = 0.0;
     _averageAudioPowerLowPassSinceLastLocation = 0.0;
@@ -155,7 +158,7 @@
 }
 
 
-- (void)micOrientationTimerFired:(NSTimer*)theTimer
+- (void)toggleMics
 {
     // Flip between mics
     NSString* newMicOrientation = ((_audioRecognizer && [_audioRecognizer.micOrientation isEqual:AVAudioSessionOrientationFront])
@@ -176,14 +179,8 @@
 
 - (void)startLogging
 {
-    // Setup mic
-    {
-        _micOrientationTimer = [NSTimer scheduledTimerWithTimeInterval:MIC_ORIENTATION_TIMER_DELAY
-                                                                target:self
-                                                              selector:@selector(micOrientationTimerFired:)
-                                                              userInfo:nil
-                                                               repeats:YES];
-    }
+    // Start mic
+    [self toggleMics];
     
     // Setup location
     {
